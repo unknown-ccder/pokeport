@@ -10,7 +10,8 @@ class PokemonsController < ApplicationController
 		h = Pokemon.find(params[:id])
 		h.health -= 10
 		if h.health <=0
-			h.destroy
+			h.health = 0 
+			h.save
 		else
 			h.save
 		end
@@ -18,7 +19,19 @@ class PokemonsController < ApplicationController
 
 	end
 
-	  def new
+	def heal
+		h = Pokemon.find(params[:id])
+		if h.health <100
+		   h.health += 10
+		   h.save
+	    end
+		redirect_back fallback_location: root_path
+
+	end
+
+
+
+	def new
 		@pokemon = Pokemon.new
 	end
 
